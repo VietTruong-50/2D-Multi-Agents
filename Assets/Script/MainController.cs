@@ -146,13 +146,20 @@ public class MainController : MonoBehaviour
 
                     //Goi arm scale
                     scaleArm.GetComponent<GripperScaleController>().DoStuff(6.5f, box.transform.position.x, requireWeight);
-
+         
 
                     if (scaleArm.GetComponent<GripperScaleController>().IsArmComplete())
                     {
                         isWaiting = false;
-
+                  
                         weightList.Remove(requireWeight);
+
+                        if (checkResult == false && weightList.Count > 0)
+                        {
+                            scaleArm.GetComponent<GripperScaleController>().Reset();
+                            isWaiting = true;
+                            requireWeight = null;
+                        }
                     }
 
                 }

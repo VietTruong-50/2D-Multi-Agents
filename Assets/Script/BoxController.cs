@@ -43,6 +43,8 @@ public class BoxController : MonoBehaviour
             transform.SetParent(otherBox.transform);
 
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
+            transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         }
     }
 
