@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum Direction
@@ -46,7 +47,9 @@ public class MainController : MonoBehaviour
             float min_pos = -scaleAxis / 2 + (scaleAxis / armEntities.Length - 0.2f) * i;
             float max_pos = min_pos + scaleAxis / armEntities.Length - 0.2f;
             if (i == 0) min_pos += 0.8f;
+            if (i == 1) max_pos = -0.42f;
             if (i == 3) max_pos -= 1.2f;
+
             armEntities[i] = new ArmEntity(i, max_pos, min_pos);
         }
 
@@ -83,6 +86,11 @@ public class MainController : MonoBehaviour
         if (isWaiting == true)
         {
             checkResult = scale.GetComponent<ScaleCheck>().CheckTotalMass();
+
+            if(checkResult == true)
+            {
+                isWaiting = false;
+            }
         }
 
         if (isPause == false)
@@ -146,12 +154,12 @@ public class MainController : MonoBehaviour
 
                     //Goi arm scale
                     scaleArm.GetComponent<GripperScaleController>().DoStuff(6.5f, box.transform.position.x, requireWeight);
-         
+
 
                     if (scaleArm.GetComponent<GripperScaleController>().IsArmComplete())
                     {
                         isWaiting = false;
-                  
+
                         weightList.Remove(requireWeight);
 
                         if (checkResult == false && weightList.Count > 0)
@@ -237,6 +245,14 @@ public class MainController : MonoBehaviour
     private void SeeTheWorld()
     {
         boxList = new HashSet<GameObject>(GameObject.FindGameObjectsWithTag("Box"));
+
+  /*      foreach (GameObject weight in boxList)
+        {
+            if (weight.name.Contains("Weight"))
+            {
+                weightList.Add(weight);
+            }
+        }*/
     }
 
     private GameObject GetNearestBoxPosition()

@@ -27,11 +27,11 @@ public class BoxController : MonoBehaviour
                 hasCollidedWithFloor = true;
             }
         }
-        else if (hit.gameObject.CompareTag("Box") || transform.name.Contains("Weight"))
+        else if (hit.gameObject.CompareTag("Box") || transform.name.Contains("Weight") && !(transform.position.x >= 8.2f && transform.position.x <= 9.6f))
         {
             AttachBox(hit.gameObject);
 
-            if(transform.name.Contains("Weight")) ReleaseBox();
+            if (transform.name.Contains("Weight")) ReleaseBox();
         }
     }
 
